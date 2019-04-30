@@ -67,7 +67,7 @@ exports.sendFan = functions.database.ref("/temp_sensor").onUpdate((change, conte
   // console.log('moisterr: '+change.after._data[diff[0]].humidity);
 
   // console.log(context);
-  const url = "http://d86f7387.ngrok.io"; // chamge at every NGROK boot
+  const url = "http://510771ff.ngrok.io"; // chamge at every NGROK boot
   const temperatureval = change.after._data[diff[0]].temp;
   // const Http = new XMLHttpRequest();
 
@@ -108,19 +108,4 @@ exports.sendFan = functions.database.ref("/temp_sensor").onUpdate((change, conte
 });
 
 
-exports.defaultFan = functions.database.ref("/users/").onUpdate((change, context) => {
 
- const fan = change.data();
- const speed = fan.temp;
-
- const { spawn } = require('child_process');
- const pyProg = spawn('python', ['fan.py', speed]);
-
- pyProg.stdout.on('data', function(data) {
-
-     console.log(data.toString());
-     res.write(data);
-     res.end('USER FAN SPEED SET /n END');
- });
-
-});
