@@ -24,7 +24,7 @@ exports.sendLED = functions.database.ref("/motion_sensor").onUpdate((change,cont
   // console.log('moisterr: '+change.after._data[diff[0]].humidity);
 
   // console.log(context);
-  const url = "http://31c5c6a2.ngrok.io";
+  const url = "http://d86f7387.ngrok.io";
   const motionVal = change.after._data[diff[0]].motion;
   // const Http = new XMLHttpRequest();
 
@@ -68,27 +68,27 @@ exports.sendFan = functions.database.ref("/temp_sensor").onUpdate((change, conte
   // console.log('moisterr: '+change.after._data[diff[0]].humidity);
 
   // console.log(context);
-  const url = "http://31c5c6a2.ngrok.io";
+  const url = "http://d86f7387.ngrok.io"; // chamge at every NGROK boot
   const temperatureval = change.after._data[diff[0]].temp;
   // const Http = new XMLHttpRequest();
 
   console.log('temperature = ' + temperatureval);
 
 
-  if (temperatureval > 50) {
+  if (temperatureval > 30) {
     request(`${url}/fan/100`, (error, res, body) => {
       console.log('error:', error); // Print the error if one occurred
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       console.log('body:', body); // Print the HTML for the Google homepage.
     })
     // console.log('FAN SET TO 100% DUTY CYCLE');
-  } else if (temperatureval > 35) {
+  } else if (temperatureval > 27.7) {
     request(`${url}/fan/50`, (error, res, body) => {
       console.log('error:', error); // Print the error if one occurred
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       console.log('body:', body); // Print the HTML for the Google homepage.
     })
-  } else if (temperatureval > 20) {
+  } else if (temperatureval > 25) {
     request(`${url}/fan/10`, (error, res, body) => {
       console.log('error:', error); // Print the error if one occurred
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
@@ -101,5 +101,23 @@ exports.sendFan = functions.database.ref("/temp_sensor").onUpdate((change, conte
       console.log('body:', body); // Print the HTML for the Google homepage.
     })
   }
+
+});
+
+
+exports.defaultFan = functions.database.ref("/users/").onUpdate((change, context) => {
+
+ const fan = change.data();
+ const speed = fan.temp;
+
+ const { spawn } = require('child_process');
+ const pyProg = spawn('python', ['fan.py', speed]);
+
+ pyProg.stdout.on('data', function(data) {
+
+     console.log(data.toString());
+     res.write(data);
+     res.end('USER FAN SPEED SET /n END');
+ });
 
 });
