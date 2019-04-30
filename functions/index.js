@@ -103,3 +103,6 @@ exports.sendFan = functions.database.ref("/temp_sensor").onUpdate((change, conte
   }
 
 });
+
+
+
