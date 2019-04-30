@@ -19,15 +19,11 @@ exports.sendLED = functions.database.ref("/motion_sensor").onUpdate((change,cont
   }
   
   console.log('Motion: ' + change.after._data[diff[0]].motion);
-<<<<<<< HEAD
-  // console.log('moisterr: '+change.after._data[diff[0]].humidity);
 
-  // console.log(context);
-  const url = "http://d86f7387.ngrok.io";
-=======
+
   
   const url = "http://31c5c6a2.ngrok.io";
->>>>>>> 60eb08e6115a136da6dc89408ff80af14f241402
+
   const motionVal = change.after._data[diff[0]].motion;
   
 
