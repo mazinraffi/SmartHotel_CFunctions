@@ -112,7 +112,6 @@ exports.sendFan = functions.database.ref("/temp_sensor").onUpdate((change, conte
 });
 
 
-<<<<<<< HEAD
 exports.defaultFan = functions.database.ref("/users/").onUpdate((change, context) => {
 
  const fan = change.data();
@@ -129,6 +128,3 @@ exports.defaultFan = functions.database.ref("/users/").onUpdate((change, context
  });
 
 });
-=======
-
->>>>>>> 60eb08e6115a136da6dc89408ff80af14f241402
